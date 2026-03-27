@@ -48,6 +48,14 @@ SIPHER = {
         "z":"a",
         " ":" "
     }
+polybius = {
+    "p": 11, "o": 12, "l": 13, "y": 14, "b": 15,
+    "i": 21, "s": 22, "a": 23, "c": 24, "d": 25,
+    "e": 31, "f": 32, "g": 33, "h": 34, "j": 35,
+    "k": 41, "m": 42, "n": 43, "q": 44, "r": 45,
+    "t": 51, "u": 52, "v": 53, "w": 54, "x": 54, "z": 55,
+    " ": 0
+}
 
 def uprava(message):
     vysledek = ""
@@ -69,46 +77,36 @@ def uprava(message):
     return vysledek
 
 
-def hebrejci(text):
+def hebrejci(vysledek):
     vysledek_hebrejci = ""
     
-    if text == "":
+    if vysledek == "":
         return False
     else:
-        for char in text:
+        for char in vysledek:
             vysledek_hebrejci += SIPHER[char]
 
     return vysledek_hebrejci
             
 
-def polybiuv_ctverec_sifrovani():
+def polybiuv_ctverec_sifrovani(vysledek_hebrejci):
+    if vysledek_hebrejci == []:
+        return False
 
+    siphered_message = ""
 
+    for char in vysledek_hebrejci:
+        siphered_message.append(polybius[char])
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    return siphered_message
 
 
 
 
 def main():
-    pass
+    uprava(Kun)
+    hebrejci(uprava(Kun))
+    polybiuv_ctverec_sifrovani(hebrejci(uprava(Kun)))
+
+
+
