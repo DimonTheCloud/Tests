@@ -1,44 +1,29 @@
 import json
-if __name__ == "__main__":
-    pass
-    patient_values = [75, 99, 62]  # hmotnost, saturace, tepova frekvence
-    weight_trend = [71, 71, 71, 71, 70, 71, 73, 75]
-    available_dates = {5, 8, 15, 25}
-    today = 25
-    # main(patient_values, weight_trend, available_dates, today)
-
-def new_data_load(patient_values):
-    filename = input("Enter file name: ")
-    if filename == "" or filename is None:
-        filename = "new_patient_values.json"
-
-    weight = patient_values[0]
-    saturation = patient_values[1]
-    heart_rate = patient_values[2]
-
-    if weight == "":
-        return "Empty weight value"
-
-    data = {
-        "weight": weight,
-        "saturation": saturation,
-        "heart_rate": heart_rate
-    }
 
 
-    with open(filename, "w", encoding='utf_8') as json_file:
-        json.dump(data, json_file)
-
+def new_data_load(filename="new_patient_values.json"):
+    with open(filename, "r", encoding="utf-8") as json_file:
+        data = json.load(json_file)
     return data
 
 
 def update_data(data, patient_values, weight_trend):
-    data = list(data.values())
+    updated_values = patient_values.copy()
 
-    patient_values = data.copy()
+    if "weight" in data:
+        updated_values[0] = data["weight"]
 
-    weight_trend.append(data[0])
-    return patient_values, weight_trend
+    if "saturation" in data:
+        updated_values[1] = data["saturation"]
+
+    if "heart_rate" in data:
+        updated_values[2] = data["heart_rate"]
+
+    updated_weight_trend = weight_trend.copy()
+    updated_weight_trend.append(updated_values[0])
+
+    return updated_values, updated_weight_trend
+
 
 def risk_assessment(patient_values, weight_trend):
     riziko = 0
@@ -47,16 +32,20 @@ def risk_assessment(patient_values, weight_trend):
     saturation = patient_values[1]
     heart_rate = patient_values[2]
 
-    if patient_values[0] > patient_values[6]:
-        riziko += patient_values[0] - patient_values[6]
+    if len(weight_trend) >= 8:
+        weight_week_ago = weight_trend[-8]
+        if weight > weight_week_ago:
+            riziko += weight - weight_week_ago
 
     if saturation < 95:
         riziko += 10
 
-    if heart_rate > 120 and (sum(weight_trend[-1:-3])/len(weight_trend)) > 120:
-        riziko += 10
+    if len(weight_trend) >= 3:
+        avg_last_3 = sum(weight_trend[-3:]) / 3
+        if heart_rate > 120 and avg_last_3 > 120:
+            riziko += 10
 
-    return riziko
+    return int(riziko)
 
 
 
