@@ -1,7 +1,31 @@
+import json
+
 MAX_HEIGHT = 2
 MAX_WEIGHT = 1.5
 MAX_IVS = 45
 CATEGORIES = [("XXS", 45, 49), ("XS", 50, 74), ("M", 75, 124), ("XL", 125, 174), ("XXL", 175, 200)]
+
+def load_pokedex(path):
+    with open(path, "r") as file:
+        return json.load(file)
+
+pokedex = load_pokedex("pokedex.json")
+
+def assign_size_category(pokemon, pokedex):
+    average_height = pokedex[pokemon["id"]["height"]]
+    percent = pokemon["height"] / average_height
+
+    for name, lower, upper in CATEGORIES:
+        if lower <= percent <= upper:
+            pokemon["size"] = name
+            return pokemon
+
+    pokemon["size"] = None
+    print("Size out of bounds. Disqualified.")
+    return pokemon
+
+
+
 
 
 if __name__ == "__main__":
@@ -12,3 +36,8 @@ if __name__ == "__main__":
         {"name": "Virizion3", "id": "640", "height": 1.84, "weight": 196.54, "IVs": (10, 10, 10)},
         {"name": "Bulbasaur", "id": "1", "height": 0.30, "weight": 9.14, "IVs": (5, 11, 1)},
     ]
+
+
+    for pokemon in my_pokemons:
+        result = assign_size_category(pokemon, pokedex)
+        print(result)
