@@ -3,7 +3,7 @@ from assignment import main
 
 def test_main_1():
 
-    file_name = "words.csv"
+    file_name = "midterm_24_G/words_small.csv"
     threshold = 1000
     letters = ["m", "a", "á", "o", "ó", "b", "c", "j", "e", "i"]
     template = ["xoxo"]
@@ -15,7 +15,7 @@ def test_main_1():
 
 def test_main_2():
 
-    file_name = "words.csv"
+    file_name = "midterm_24_G/words_small.csv"
     threshold = 800
     letters = ["m", "a", "á", "o", "ó", "b", "c", "j", "e", "i"]
     template = ["xoxo", "xoxox"]
@@ -27,7 +27,7 @@ def test_main_2():
 
 def test_main_3():
 
-    file_name = "words.csv"
+    file_name = "midterm_24_G/words_small.csv"
     threshold = 1000
     letters = ["m", "a", "á", "o", "ó", "b", "c", "j", "e", "i"]
     template = ["xoxoxoxo"]
