@@ -57,13 +57,13 @@ def sort_and_convert(numbers):
     arabic_numbers = []
 
     for number in numbers:
-        is_roman, corrected = roman_to_arabic(number)
+        is_roman, corrected = roman_validator(number)
 
         if is_roman:
-            arabic_value = arabic_to_roman(number)
+            arabic_value = roman_to_arabic(corrected)
             arabic_numbers.append(arabic_value)
         else:
-            roman_value = roman_to_arabic(number)
+            roman_value = arabic_to_roman(number)
             roman_numbers.append(roman_value)
 
 
