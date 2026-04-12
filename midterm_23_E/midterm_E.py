@@ -13,3 +13,68 @@ MOL_WEIGHT = [
 ]
 
 
+def decomposition(molecules):
+    if len(molecules) == 0 or len(molecules) > 1:
+
+        return "analyticka reakce neni mozna"
+
+    molecule = molecules[0]
+    result = []
+    current = ""
+
+    for char in molecule:
+        if char.isupper():   # заглавная буква
+            if current != "":
+                result.append(current)
+            current = char
+        elif char.islower():   # маленькая буква
+            current += char
+        elif char.isdigit():   # цифра
+            pass
+
+    if current != "":
+        result.append(current)
+
+    return result
+
+def molecular_weight(molecules):
+    if len(molecules) == 0 or len(molecules) > 1:
+        print("vypocet molekularni hmotnosti neni mozny")
+        return
+
+    atoms = decomposition(molecules)
+
+    total_weight = 0
+
+    for atom in atoms:
+        for symbol, weight in MOL_WEIGHT:
+            if atom == symbol:
+                total_weight += weight
+
+    return [str(total_weight) + " mol"]
+
+def synthesis(molecules):
+    if len(molecules) == 0 or len(molecules) < 2:
+        return "synteza neni mozna"
+
+    normalized = []
+
+    for molecule in molecules:
+        if molecule[0].isdigit():
+            number = molecule[0]
+            rest = molecule[1:]
+            normalized.append(rest + number)
+
+        elif molecule[-1].isdigit():
+            number = molecule[-1]
+            rest = molecule[:-1]
+            normalized.append(number + rest)
+
+        else:
+            normalized.append(molecule)
+
+    result = ""
+    for molecule in normalized:
+        result += molecule
+
+    return result
